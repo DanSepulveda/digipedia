@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>DigiPedia</title>
+</head>
+
+<body>
+    <header>
+        <section class="hero">
+            <nav>
+                <a href="#">
+                    <img src="./assets/img/logo.png" alt="Logo Digimon">
+                </a>
+            </nav>
+            <section>
+                <h1>DigiPedia</h1>
+                <input type="text" name="search" id="searchInput" autofocus placeholder="Looking for a Digimon?..."
+                    form="sortForm">
+            </section>
+        </section>
+    </header>
+    <main>
+        <section title="form">
+            <form id="sortForm">
+                <div>
+                    <select name="sortBy" id="sortBy">
+                        <option value="default" selected disabled>Sort by</option>
+                        <option value="default">Default</option>
+                        <option value="asc">Name: A -> Z</option>
+                        <option value="desc">Name: Z -> A</option>
+                    </select>
+                </div>
+                <div class="labels">
+                    <p>Group by:</p>
+                    <div>
+                        <input type="radio" name="groupBy" id="noGroup" value="noGroup" checked>
+                        <label for="noGroup">No group</label>
+                        <input type="radio" name="groupBy" id="group" value="group">
+                        <label for="group">By level</label>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <section id="results">
+
+        </section>
+    </main>
+    <footer>
+        <p>Developed by <span>Daniel Sepúlveda</span></p>
+    </footer>
+    <div id="return" class="hidden">
+        <i class="fa-solid fa-arrow-up"></i>
+    </div>
+    <script src="https://kit.fontawesome.com/e4c57afbb7.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+
+</html>
