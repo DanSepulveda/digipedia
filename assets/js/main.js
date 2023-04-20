@@ -131,6 +131,7 @@ function drawCard(container, digimon, lvlInfo) {
     card.appendChild(lvl)
   }
   container.appendChild(card)
+  card.addEventListener('click', () => modal(digimon))
 }
 
 function drawMessage(container, message) {
@@ -140,4 +141,22 @@ function drawMessage(container, message) {
   box.innerText = message
   messageContainer.appendChild(box)
   container.appendChild(messageContainer)
+}
+
+function modal(digimon) {
+  console.log('me ejecuto')
+  const { name, img, level } = digimon
+  const modalContainer = document.getElementById('modal')
+  modalContainer.classList.toggle('hide')
+  const card = document.createElement('article')
+  const title = document.createElement('h3')
+  const image = document.createElement('img')
+  // card.className = 'card'
+  card.id = name
+  title.textContent = name
+  image.src = img
+  image.alt = `Imagen de ${name}`
+  card.appendChild(title)
+  card.appendChild(image)
+  modalContainer.appendChild(card)
 }
