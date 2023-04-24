@@ -42,6 +42,7 @@ html *{
 .text-blue{color: var(--bg);}
 /* POSITION */
 .fg-sm-1 {flex: 0;}
+.transition{transition: all .3s}
 
 header {
     height: 350px;
@@ -78,34 +79,24 @@ input:checked + label{
 
 .card{
     overflow: hidden;
-    cursor: pointer;
-    transition: all .3s;
 }
 
-.card img{
-    filter: grayscale();
-    transition: all .3s;
-}
+.card img{transition: all .3s;}
 
 .card:hover img {
     transform: scale(1.05);
     filter: none;
 }
 
+#results{
+    min-height: calc(100vh - 350px);
+}
 
 #return{
     width: 50px;
     height: 50px;
-    border-radius: 50%;
-    background-color: var(--yellow);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
     right: .5em;
     bottom: .5em;
-    z-index: 100;
-    cursor: pointer;
 }
 
 .show{
@@ -148,22 +139,14 @@ div#return i{font-size: 35px;}
 
 @media (min-width: 992px) {
     .fs-title{font-size: 100px;}
-    
-}
-
-
-@media (min-width: 900px) {
     nav img {
-            width: 120px;
-            margin-left: 0;
-            position: initial;
+        width: 120px;
+        margin-left: 0;
+        position: initial;
     }
-    /* header{height: 500px;}
-    header input[type="text"]{width: 40%;}
-    .message-box article{width: 50%;} */
+   .messageBox{width: 50%;}
 }
 
 @media (min-width: 1200px) {
-    /* header{height: 400px;} */
     .card img{width: 70%;}
 } 

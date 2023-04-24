@@ -34,14 +34,14 @@ function setListeners(data) {
 }
 
 function handleScroll(upButton) {
-  const { className } = upButton
+  const { className, classList } = upButton
   const { pageYOffset } = window
 
-  if (pageYOffset > 800 && className === 'hidden') {
-    upButton.className = 'show'
+  if (pageYOffset > 800 && classList.contains('hidden')) {
+    upButton.classList.replace('hidden', 'show')
   }
-  if (pageYOffset <= 800 && className === 'show') {
-    upButton.className = 'hidden'
+  if (pageYOffset <= 800 && classList.contains('show')) {
+    upButton.classList.replace('show', 'hidden')
   }
 }
 
@@ -123,13 +123,14 @@ function drawCategory(container, data, title, lvlInfo = true) {
 function drawCard(container, digimon, lvlInfo) {
   const { name, img, level } = digimon
   const cardContainer = document.createElement('div')
-  cardContainer.className = 'col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl-2 p-3'
+  cardContainer.className = 'col-12 col-sm-6 col-lg-4 col-xl-3 p-3'
   const card = document.createElement('article')
   const title = document.createElement('h3')
   const image = document.createElement('img')
   card.className =
-    'card d-flex flex-column align-items-center rounded bg-white shadow-sm'
+    'card d-flex flex-column align-items-center rounded bg-white shadow-sm transition'
   card.id = name
+  card.role = 'button'
   title.textContent = name
   title.className = 'w-100 text-center py-3 bg-main-yellow fw-bold text-gray'
   image.src = img
@@ -154,14 +155,14 @@ function drawMessage(container, message) {
   messageContainer.className = 'd-flex justify-content-center pt-5'
   const box = document.createElement('article')
   box.innerText = message
-  box.className = 'rounded text-center fs-3 bg-light text-gray py-4 px-3 w-100'
+  box.className =
+    'rounded text-center fs-3 bg-light text-gray py-4 px-3 messageBox'
   messageContainer.appendChild(box)
   container.innerHTML = ''
   container.appendChild(messageContainer)
 }
 
 function modal(digimon) {
-  console.log('me ejecuto')
   const { name, img, level } = digimon
   const modalContainer = document.getElementById('modal')
   modalContainer.classList.toggle('hide')
@@ -185,13 +186,11 @@ function modal(digimon) {
 }
 
 async function descargar(url) {
-  console.log(url)
   fetch(url, {
     mode: 'no-cors',
   })
     .then((response) => response.blob())
     .then((blob) => {
-      console.log(blob)
       let blobUrl = window.URL.createObjectURL(blob)
       let a = document.createElement('a')
       a.download = url.replace(/^.*[\\\/]/, '')

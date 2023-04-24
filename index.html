@@ -47,7 +47,7 @@
             autofocus
             placeholder="Looking for a Digimon?..."
             form="sortForm"
-            class="w-75 fs-5 py-2 px-3 rounded-pill form-control"
+            class="w-auto fs-5 py-2 px-3 rounded-pill form-control"
           />
         </section>
       </section>
@@ -107,19 +107,26 @@
         Developed by <span class="fw-bold">Daniel Sepúlveda</span>
       </p>
     </footer>
-    <div id="return" class="hidden">
+    <div
+      id="return"
+      class="hidden bg-main-yellow rounded-circle d-flex justify-content-center align-items-center z-5 position-fixed"
+      role="button"
+    >
       <i class="fa-solid fa-arrow-up text-blue"></i>
     </div>
     <div id="modal" class="hide"></div>
+    <!-- BOOTSTRAP -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
       crossorigin="anonymous"
     ></script>
+    <!-- FONT AWESOME -->
     <script
       src="https://kit.fontawesome.com/e4c57afbb7.js"
       crossorigin="anonymous"
     ></script>
+    <!-- CUSTOM JS -->
     <script src="./assets/js/main.js"></script>
   </body>
 </html>
