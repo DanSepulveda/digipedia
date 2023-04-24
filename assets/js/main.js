@@ -9,44 +9,40 @@
     })
 })()
 
-function main(digimons) {
-  setListeners(digimons)
-  drawCards(digimons)
+function main(data) {
+  setListeners(data)
+  drawCards(data)
 }
 
-function setListeners(digimons) {
+function setListeners(data) {
   // listener for input, select and radio buttons
   const elements = ['searchInput', 'sortForm']
   elements.map((item) => {
-    document.getElementById(item).addEventListener('input', (event) => handleForm(event, digimons))
+    document
+      .getElementById(item)
+      .addEventListener('input', (event) => handleForm(event, data))
   })
 
   // listener to show/hide 'Go top' button
-  window.addEventListener('scroll', handleScroll)
+  const upButton = document.getElementById('return')
+  window.addEventListener('scroll', () => handleScroll(upButton))
 
   // listener to go top
-  document.getElementById('return').addEventListener('click', () => {
+  upButton.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   })
 }
 
-function handleScroll() {
-  const upButton = document.getElementById('return')
+function handleScroll(upButton) {
   const { className } = upButton
   const { pageYOffset } = window
-  //   console.log(pageYOffset)
-  //   console.log(upButton.className)
+
   if (pageYOffset > 800 && className === 'hidden') {
     upButton.className = 'show'
   }
   if (pageYOffset <= 800 && className === 'show') {
-    // upButton.classList.toggle('hidden')
     upButton.className = 'hidden'
   }
-  // if(pageYOffset)
-  //   console.log(display)
-  //   const result = window.pageYOffset > 800 ? 'flex' : 'none'
-  //   upButton.style.display = result
 }
 
 function handleForm(event, data) {
@@ -64,7 +60,9 @@ function readFilters(formData, data) {
 }
 
 function filterByName(data, name) {
-  return data.filter((item) => item.name.toLowerCase().includes(name.toLowerCase()))
+  return data.filter((item) =>
+    item.name.toLowerCase().includes(name.toLowerCase())
+  )
 }
 
 function sortByName(data, type = 'asc') {
@@ -72,7 +70,9 @@ function sortByName(data, type = 'asc') {
     return data
   }
   return data.sort((a, b) => {
-    return type === 'desc' ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name)
+    return type === 'desc'
+      ? b.name.localeCompare(a.name)
+      : a.name.localeCompare(b.name)
   })
 }
 
@@ -80,7 +80,9 @@ function groupByLevel(data, type = 'group') {
   if (type === 'group') {
     const levels = {}
     data.forEach((item) => {
-      levels[item.level] ? levels[item.level].push(item) : (levels[item.level] = [item])
+      levels[item.level]
+        ? levels[item.level].push(item)
+        : (levels[item.level] = [item])
     })
     return levels
   }
@@ -95,7 +97,12 @@ function drawCards(data) {
     drawCategory(container, data, `Digimon's List (${data.length})`)
   } else if (Object.keys(data).length) {
     Object.keys(data).map((level) => {
-      drawCategory(container, data[level], `${level} (${data[level].length})`, false)
+      drawCategory(
+        container,
+        data[level],
+        `${level} (${data[level].length})`,
+        false
+      )
     })
   } else {
     drawMessage(container, 'No results. Try another search')
@@ -105,41 +112,51 @@ function drawCards(data) {
 function drawCategory(container, data, title, lvlInfo = true) {
   const sectionTitle = document.createElement('h2')
   sectionTitle.innerText = title
+  sectionTitle.className = 'text-center text-white mb-3 fs-1 fw-bold ls-1'
   container.appendChild(sectionTitle)
   const section = document.createElement('section')
-  section.className = 'digimons'
+  section.className = 'row'
   data.forEach((digimon) => drawCard(section, digimon, lvlInfo))
   container.appendChild(section)
 }
 
 function drawCard(container, digimon, lvlInfo) {
   const { name, img, level } = digimon
+  const cardContainer = document.createElement('div')
+  cardContainer.className = 'col-12 col-sm-6 col-lg-4 col-xl-3 col-xxl-2 p-3'
   const card = document.createElement('article')
   const title = document.createElement('h3')
   const image = document.createElement('img')
-  card.className = 'card'
+  card.className =
+    'card d-flex flex-column align-items-center rounded bg-white shadow-sm'
   card.id = name
   title.textContent = name
+  title.className = 'w-100 text-center py-3 bg-main-yellow fw-bold text-gray'
   image.src = img
   image.alt = `Imagen de ${name}`
+  image.className = 'py-3 img-fluid'
   card.appendChild(title)
   card.appendChild(image)
 
   if (lvlInfo) {
     const lvl = document.createElement('p')
     lvl.textContent = level
+    lvl.className = 'w-100 text-center py-1 bg-ternary'
     card.appendChild(lvl)
   }
-  container.appendChild(card)
+  cardContainer.appendChild(card)
+  container.appendChild(cardContainer)
   card.addEventListener('click', () => modal(digimon))
 }
 
 function drawMessage(container, message) {
   const messageContainer = document.createElement('article')
-  messageContainer.className = 'message-box'
+  messageContainer.className = 'd-flex justify-content-center pt-5'
   const box = document.createElement('article')
   box.innerText = message
+  box.className = 'rounded text-center fs-3 bg-light text-gray py-4 px-3 w-100'
   messageContainer.appendChild(box)
+  container.innerHTML = ''
   container.appendChild(messageContainer)
 }
 
@@ -151,12 +168,36 @@ function modal(digimon) {
   const card = document.createElement('article')
   const title = document.createElement('h3')
   const image = document.createElement('img')
-  // card.className = 'card'
+  modalContainer.innerHTML =
+    '<i class="fa-solid fa-circle-xmark" style="color: red"></i>'
+  card.className = 'card card-h'
   card.id = name
   title.textContent = name
   image.src = img
   image.alt = `Imagen de ${name}`
   card.appendChild(title)
   card.appendChild(image)
+  const anchor = document.createElement('button')
+  anchor.innerText = 'Descargar'
+  anchor.onclick = () => descargar(img)
+  card.appendChild(anchor)
   modalContainer.appendChild(card)
+}
+
+async function descargar(url) {
+  console.log(url)
+  fetch(url, {
+    mode: 'no-cors',
+  })
+    .then((response) => response.blob())
+    .then((blob) => {
+      console.log(blob)
+      let blobUrl = window.URL.createObjectURL(blob)
+      let a = document.createElement('a')
+      a.download = url.replace(/^.*[\\\/]/, '')
+      a.href = blobUrl
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+    })
 }
