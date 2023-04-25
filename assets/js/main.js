@@ -166,37 +166,49 @@ function modal(digimon) {
   const { name, img, level } = digimon
   const modalContainer = document.getElementById('modal')
   modalContainer.classList.toggle('hide')
+
+  // CREATE ELEMENTS
   const card = document.createElement('article')
   const title = document.createElement('h3')
   const image = document.createElement('img')
-  modalContainer.innerHTML =
-    '<i class="fa-solid fa-circle-xmark" style="color: red"></i>'
-  card.className = 'card card-h'
-  card.id = name
+  // const imgButton = document.createElement('button')
+  const icon = document.createElement('i')
+  card.className =
+    'modal-card d-flex rounded flex-column bg-white align-items-center p-3'
   title.textContent = name
   image.src = img
   image.alt = `Imagen de ${name}`
+  // imgButton.innerText = 'Descargar imagen'
+  // imgButton.onclick = () => download(img)
+  icon.className = 'fa-solid fa-circle-xmark text-danger fs-3 align-self-end'
+  icon.role = 'button'
+  icon.onclick = () => modalContainer.classList.toggle('hide')
+  card.appendChild(icon)
   card.appendChild(title)
   card.appendChild(image)
-  const anchor = document.createElement('button')
-  anchor.innerText = 'Descargar'
-  anchor.onclick = () => descargar(img)
-  card.appendChild(anchor)
+  // card.appendChild(imgButton)
   modalContainer.appendChild(card)
 }
 
-async function descargar(url) {
+async function download(url) {
   fetch(url, {
     mode: 'no-cors',
+    // referrerPolicy: 'strict-origin-when-cross-origin',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET',
+    },
+    method: 'GET',
   })
     .then((response) => response.blob())
     .then((blob) => {
-      let blobUrl = window.URL.createObjectURL(blob)
-      let a = document.createElement('a')
-      a.download = url.replace(/^.*[\\\/]/, '')
-      a.href = blobUrl
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
+      console.log(blob)
+      const blobUrl = window.URL.createObjectURL(blob)
+      const anchor = document.createElement('a')
+      anchor.download = url.replace(/^.*[\\\/]/, '')
+      anchor.href = blobUrl
+      document.body.appendChild(anchor)
+      anchor.click()
+      anchor.remove()
     })
 }

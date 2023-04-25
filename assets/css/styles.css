@@ -120,17 +120,10 @@ div#return i{font-size: 35px;}
     top: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.9);
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-}
-
-.card-h{
-    width: 300px;
 }
 
 .hide{
-    display: none;
+    display: none !important;
 }
 
 @media (min-width: 576px) {
