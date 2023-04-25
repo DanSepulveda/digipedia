@@ -165,6 +165,7 @@ function drawMessage(container, message) {
 function modal(digimon) {
   const { name, img, level } = digimon
   const modalContainer = document.getElementById('modal')
+  modalContainer.innerHTML = ''
   modalContainer.classList.toggle('hide')
 
   // CREATE ELEMENTS
